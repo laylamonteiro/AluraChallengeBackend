@@ -15,12 +15,6 @@ public class DespesasController {
     @Autowired
     DespesasService despesasService;
 
-    @GetMapping("/")
-    @ResponseStatus(HttpStatus.OK)
-    public String teste() {
-        return "Deu certo";
-    }
-
     @GetMapping("/despesas")
     @ResponseStatus(HttpStatus.OK)
     public List<Despesas> getAllDespesas() {

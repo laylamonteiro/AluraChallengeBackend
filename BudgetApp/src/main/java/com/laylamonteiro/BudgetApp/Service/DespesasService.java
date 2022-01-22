@@ -1,6 +1,7 @@
 package com.laylamonteiro.BudgetApp.Service;
 
 import com.laylamonteiro.BudgetApp.Entity.Despesas;
+import com.laylamonteiro.BudgetApp.Entity.Receitas;
 import com.laylamonteiro.BudgetApp.Repository.DespesasRepository;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,13 @@ public class DespesasService {
     }
 
     public Despesas findById(final Long id) {
-        return repository.findById(id).get();
+        Optional<Despesas> despesa = repository.findById(id);
+
+        if (despesa.isPresent()) {
+            return despesa.get();
+        } else {
+            throw new EntityNotFoundException("Despesa " + id + "não encontrada.");
+        }
     }
 
     public Despesas create(Despesas despesa) {
@@ -32,7 +39,8 @@ public class DespesasService {
     }
 
     public Despesas update(Despesas incomingDespesa) {
-        Optional<Despesas> existingDespesa = repository.findById(incomingDespesa.getId());
+        Long incomingDespesaId = incomingDespesa.getId();
+        Optional<Despesas> existingDespesa = repository.findById(incomingDespesaId);
 
         if (existingDespesa.isPresent()) {
             Despesas despesa = existingDespesa.get();
@@ -42,7 +50,7 @@ public class DespesasService {
 
             return repository.save(despesa);
         } else {
-            throw new EntityNotFoundException("Despesa não existe");
+            throw new EntityNotFoundException("Despesa " + incomingDespesaId + "não encontrada.");
         }
     }
 
