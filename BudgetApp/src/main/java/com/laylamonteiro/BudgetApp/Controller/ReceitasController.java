@@ -21,25 +21,25 @@ public class ReceitasController {
         return receitasService.findAll();
     }
 
-    @GetMapping("/receitas/{id}")
+    @GetMapping("/receita/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Receitas getDespesaById(@PathVariable(name = "id") Long id) {
         return receitasService.findById(id);
     }
 
-    @PostMapping("/receitas")
+    @PostMapping("/receita")
     @ResponseStatus(HttpStatus.CREATED)
     public Receitas createDespesa(@RequestBody Receitas receitas) {
         return receitasService.create(receitas);
     }
 
-    @PutMapping("/receitas")
+    @PutMapping("/receita")
     @ResponseStatus(HttpStatus.OK)
     public Receitas updateDespesa(@Valid @RequestBody Receitas receitas) {
         return receitasService.update(receitas);
     }
 
-    @DeleteMapping("/receitas/{id}")
+    @DeleteMapping("/receita/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteDespesa(@PathVariable(name = "id") Long id) {
         receitasService.delete(id);
