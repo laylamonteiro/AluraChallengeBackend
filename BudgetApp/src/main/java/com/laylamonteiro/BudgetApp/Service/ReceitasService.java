@@ -1,7 +1,9 @@
 package com.laylamonteiro.BudgetApp.Service;
 
+import com.laylamonteiro.BudgetApp.DTO.ReceitasDTO;
 import com.laylamonteiro.BudgetApp.Entity.Receitas;
 import com.laylamonteiro.BudgetApp.Repository.ReceitasRepository;
+import com.laylamonteiro.BudgetApp.Utils.EntityMapper;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,30 +15,34 @@ import java.util.Optional;
 
 @Data
 @Service
-@Transactional
 public class ReceitasService {
 
     @Autowired
     final ReceitasRepository repository;
+
+    final EntityMapper mapper = new EntityMapper();
 
     public List<Receitas> findAll() {
         return repository.findAll();
     }
 
     public Receitas findById(final Long id) {
-        Optional<Receitas> receita = repository.findById(id);
+        Optional<Receitas> receitaOptional = repository.findById(id);
 
-        if (receita.isPresent()) {
-            return receita.get();
+        if (receitaOptional.isPresent()) {
+            return receitaOptional.get();
         } else {
             throw new EntityNotFoundException("Receita " + id + "não encontrada.");
         }
     }
 
-    public Receitas create(Receitas receita) {
+    @Transactional
+    public Receitas create(ReceitasDTO dto) {
+        Receitas receita = mapper.toEntity(dto);
         return repository.save(receita);
     }
 
+    @Transactional
     public Receitas update(Receitas incomingReceita) {
         Long incomingReceitaId = incomingReceita.getId();
         Optional<Receitas> existingReceita = repository.findById(incomingReceitaId);
@@ -53,6 +59,7 @@ public class ReceitasService {
         }
     }
 
+    @Transactional
     public void delete(Long id) {
         Receitas receita = findById(id);
         repository.delete(receita);

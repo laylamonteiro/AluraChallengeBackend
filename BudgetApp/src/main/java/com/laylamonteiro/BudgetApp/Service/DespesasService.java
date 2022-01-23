@@ -1,8 +1,10 @@
 package com.laylamonteiro.BudgetApp.Service;
 
+import com.laylamonteiro.BudgetApp.DTO.DespesasDTO;
 import com.laylamonteiro.BudgetApp.Entity.Despesas;
 import com.laylamonteiro.BudgetApp.Entity.Receitas;
 import com.laylamonteiro.BudgetApp.Repository.DespesasRepository;
+import com.laylamonteiro.BudgetApp.Utils.EntityMapper;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,9 @@ public class DespesasService {
     @Autowired
     final DespesasRepository repository;
 
+    final EntityMapper mapper = new EntityMapper();
+
+
     public List<Despesas> findAll() {
         return repository.findAll();
     }
@@ -34,7 +39,8 @@ public class DespesasService {
         }
     }
 
-    public Despesas create(Despesas despesa) {
+    public Despesas create(DespesasDTO dto) {
+        Despesas despesa = mapper.toEntity(dto);
         return repository.save(despesa);
     }
 
