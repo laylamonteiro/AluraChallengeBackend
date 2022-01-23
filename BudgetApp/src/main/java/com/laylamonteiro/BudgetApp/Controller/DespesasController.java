@@ -1,5 +1,6 @@
 package com.laylamonteiro.BudgetApp.Controller;
 
+import com.laylamonteiro.BudgetApp.DTO.DespesasDTO;
 import com.laylamonteiro.BudgetApp.Entity.Despesas;
 import com.laylamonteiro.BudgetApp.Service.DespesasService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class DespesasController {
 
     @PostMapping("/despesa")
     @ResponseStatus(HttpStatus.CREATED)
-    public Despesas createDespesa(@RequestBody Despesas despesa) {
+    public Despesas createDespesa(@RequestBody DespesasDTO despesa) {
         return despesasService.create(despesa);
     }
 

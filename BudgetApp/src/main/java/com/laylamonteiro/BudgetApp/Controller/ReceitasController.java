@@ -1,5 +1,6 @@
 package com.laylamonteiro.BudgetApp.Controller;
 
+import com.laylamonteiro.BudgetApp.DTO.ReceitasDTO;
 import com.laylamonteiro.BudgetApp.Entity.Receitas;
 import com.laylamonteiro.BudgetApp.Service.ReceitasService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +30,8 @@ public class ReceitasController {
 
     @PostMapping("/receita")
     @ResponseStatus(HttpStatus.CREATED)
-    public Receitas createDespesa(@RequestBody Receitas receitas) {
-        return receitasService.create(receitas);
+    public Receitas createDespesa(@RequestBody ReceitasDTO receita) {
+        return receitasService.create(receita);
     }
 
     @PutMapping("/receita")
