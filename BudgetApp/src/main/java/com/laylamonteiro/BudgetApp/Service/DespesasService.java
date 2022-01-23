@@ -2,7 +2,6 @@ package com.laylamonteiro.BudgetApp.Service;
 
 import com.laylamonteiro.BudgetApp.DTO.DespesasDTO;
 import com.laylamonteiro.BudgetApp.Entity.Despesas;
-import com.laylamonteiro.BudgetApp.Entity.Receitas;
 import com.laylamonteiro.BudgetApp.Repository.DespesasRepository;
 import com.laylamonteiro.BudgetApp.Utils.EntityMapper;
 import lombok.Data;
@@ -16,7 +15,6 @@ import java.util.Optional;
 
 @Data
 @Service
-@Transactional
 public class DespesasService {
 
     @Autowired
@@ -39,11 +37,13 @@ public class DespesasService {
         }
     }
 
+    @Transactional
     public Despesas create(DespesasDTO dto) {
         Despesas despesa = mapper.toEntity(dto);
         return repository.save(despesa);
     }
 
+    @Transactional
     public Despesas update(Despesas incomingDespesa) {
         Long incomingDespesaId = incomingDespesa.getId();
         Optional<Despesas> existingDespesa = repository.findById(incomingDespesaId);
@@ -60,6 +60,7 @@ public class DespesasService {
         }
     }
 
+    @Transactional
     public void delete(Long id) {
         Despesas despesa = findById(id);
         repository.delete(despesa);
