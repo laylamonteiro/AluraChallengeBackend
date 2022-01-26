@@ -1,6 +1,6 @@
 package com.laylamonteiro.BudgetApp.Enum;
 
-public enum Categoria {
+public enum CategoriaDespesa {
 
     ALIMENTACAO("Alimentação"),
     SAÚDE("Saúde"),
@@ -13,7 +13,7 @@ public enum Categoria {
 
     private final String categoria;
 
-    Categoria(final String categoria) {
+    CategoriaDespesa(final String categoria) {
         this.categoria = categoria;
     }
 
