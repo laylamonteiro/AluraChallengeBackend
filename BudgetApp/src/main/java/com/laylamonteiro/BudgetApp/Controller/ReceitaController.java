@@ -1,7 +1,7 @@
 package com.laylamonteiro.BudgetApp.Controller;
 
-import com.laylamonteiro.BudgetApp.DTO.ReceitasDTO;
-import com.laylamonteiro.BudgetApp.Entity.Receitas;
+import com.laylamonteiro.BudgetApp.DTO.ReceitaDTO;
+import com.laylamonteiro.BudgetApp.Entity.Receita;
 import com.laylamonteiro.BudgetApp.Service.ReceitasService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,33 +11,33 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-public class ReceitasController {
+public class ReceitaController {
 
     @Autowired
     ReceitasService receitasService;
 
     @GetMapping("/receitas")
     @ResponseStatus(HttpStatus.OK)
-    public List<Receitas> getAllDespesas() {
+    public List<Receita> getAllDespesas() {
         return receitasService.findAll();
     }
 
     @GetMapping("/receita/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Receitas getDespesaById(@PathVariable(name = "id") Long id) {
+    public Receita getDespesaById(@PathVariable(name = "id") Long id) {
         return receitasService.findById(id);
     }
 
     @PostMapping("/receita")
     @ResponseStatus(HttpStatus.CREATED)
-    public Receitas createDespesa(@RequestBody ReceitasDTO receita) {
+    public Receita createDespesa(@RequestBody ReceitaDTO receita) {
         return receitasService.create(receita);
     }
 
     @PutMapping("/receita")
     @ResponseStatus(HttpStatus.OK)
-    public Receitas updateDespesa(@Valid @RequestBody Receitas receitas) {
-        return receitasService.update(receitas);
+    public Receita updateDespesa(@Valid @RequestBody Receita receita) {
+        return receitasService.update(receita);
     }
 
     @DeleteMapping("/receita/{id}")

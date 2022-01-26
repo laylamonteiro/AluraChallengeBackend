@@ -1,14 +1,14 @@
 package com.laylamonteiro.BudgetApp.Utils;
 
-import com.laylamonteiro.BudgetApp.DTO.DespesasDTO;
-import com.laylamonteiro.BudgetApp.DTO.ReceitasDTO;
-import com.laylamonteiro.BudgetApp.Entity.Despesas;
-import com.laylamonteiro.BudgetApp.Entity.Receitas;
+import com.laylamonteiro.BudgetApp.DTO.DespesaDTO;
+import com.laylamonteiro.BudgetApp.DTO.ReceitaDTO;
+import com.laylamonteiro.BudgetApp.Entity.Despesa;
+import com.laylamonteiro.BudgetApp.Entity.Receita;
 
 public class EntityMapper {
 
-    public DespesasDTO toDTO(Despesas despesa) {
-        DespesasDTO dto = new DespesasDTO();
+    public DespesaDTO toDTO(Despesa despesa) {
+        DespesaDTO dto = new DespesaDTO();
 
         dto.setId(despesa.getId());
         dto.setDescricao(despesa.getDescricao());
@@ -18,8 +18,8 @@ public class EntityMapper {
         return dto;
     }
 
-    public ReceitasDTO toDTO(Receitas receita) {
-        ReceitasDTO dto = new ReceitasDTO();
+    public ReceitaDTO toDTO(Receita receita) {
+        ReceitaDTO dto = new ReceitaDTO();
 
         dto.setId(receita.getId());
         dto.setDescricao(receita.getDescricao());
@@ -29,8 +29,8 @@ public class EntityMapper {
         return dto;
     }
 
-    public Despesas toEntity(DespesasDTO dto) {
-        Despesas despesa = new Despesas();
+    public Despesa toEntity(DespesaDTO dto) {
+        Despesa despesa = new Despesa();
 
         despesa.setDescricao(dto.getDescricao());
         despesa.setValor(dto.getValor());
@@ -39,8 +39,8 @@ public class EntityMapper {
         return despesa;
     }
 
-    public Receitas toEntity(ReceitasDTO dto) {
-        Receitas receita = new Receitas();
+    public Receita toEntity(ReceitaDTO dto) {
+        Receita receita = new Receita();
 
         receita.setDescricao(dto.getDescricao());
         receita.setValor(dto.getValor());
