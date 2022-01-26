@@ -28,6 +28,12 @@ public class ReceitaController {
         return receitasService.findById(id);
     }
 
+    @GetMapping("/receita")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Receita> getDespesaByDescricao(@RequestParam String descricao) {
+        return receitasService.findByDescricao(descricao);
+    }
+
     @PostMapping("/receita")
     @ResponseStatus(HttpStatus.CREATED)
     public Receita createDespesa(@RequestBody ReceitaDTO receita) {

@@ -5,6 +5,7 @@ import com.laylamonteiro.BudgetApp.Entity.Receita;
 import com.laylamonteiro.BudgetApp.Repository.ReceitaRepository;
 import com.laylamonteiro.BudgetApp.Utils.EntityMapper;
 import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Data
 @Service
@@ -34,6 +36,14 @@ public class ReceitasService {
         } else {
             throw new EntityNotFoundException("Receita " + id + "não encontrada.");
         }
+    }
+
+    public List<Receita> findByDescricao(String descricao) {
+        List<Receita> receitas = findAll();
+
+        return receitas.stream().filter(despesa ->
+                StringUtils.containsIgnoreCase(despesa.getDescricao(), descricao))
+                .collect(Collectors.toList());
     }
 
     @Transactional
