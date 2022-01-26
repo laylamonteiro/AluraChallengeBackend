@@ -1,10 +1,11 @@
 package com.laylamonteiro.BudgetApp.Service;
 
-import com.laylamonteiro.BudgetApp.DTO.ReceitasDTO;
-import com.laylamonteiro.BudgetApp.Entity.Receitas;
-import com.laylamonteiro.BudgetApp.Repository.ReceitasRepository;
+import com.laylamonteiro.BudgetApp.DTO.ReceitaDTO;
+import com.laylamonteiro.BudgetApp.Entity.Receita;
+import com.laylamonteiro.BudgetApp.Repository.ReceitaRepository;
 import com.laylamonteiro.BudgetApp.Utils.EntityMapper;
 import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,22 +13,23 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Data
 @Service
 public class ReceitasService {
 
     @Autowired
-    final ReceitasRepository repository;
+    final ReceitaRepository repository;
 
     final EntityMapper mapper = new EntityMapper();
 
-    public List<Receitas> findAll() {
+    public List<Receita> findAll() {
         return repository.findAll();
     }
 
-    public Receitas findById(final Long id) {
-        Optional<Receitas> receitaOptional = repository.findById(id);
+    public Receita findById(final Long id) {
+        Optional<Receita> receitaOptional = repository.findById(id);
 
         if (receitaOptional.isPresent()) {
             return receitaOptional.get();
@@ -36,19 +38,27 @@ public class ReceitasService {
         }
     }
 
+    public List<Receita> findByDescricao(String descricao) {
+        List<Receita> receitas = findAll();
+
+        return receitas.stream().filter(despesa ->
+                StringUtils.containsIgnoreCase(despesa.getDescricao(), descricao))
+                .collect(Collectors.toList());
+    }
+
     @Transactional
-    public Receitas create(ReceitasDTO dto) {
-        Receitas receita = mapper.toEntity(dto);
+    public Receita create(ReceitaDTO dto) {
+        Receita receita = mapper.toEntity(dto);
         return repository.save(receita);
     }
 
     @Transactional
-    public Receitas update(Receitas incomingReceita) {
+    public Receita update(Receita incomingReceita) {
         Long incomingReceitaId = incomingReceita.getId();
-        Optional<Receitas> existingReceita = repository.findById(incomingReceitaId);
+        Optional<Receita> existingReceita = repository.findById(incomingReceitaId);
 
         if (existingReceita.isPresent()) {
-            Receitas receita = existingReceita.get();
+            Receita receita = existingReceita.get();
             receita.setDescricao(incomingReceita.getDescricao());
             receita.setValor(incomingReceita.getValor());
             receita.setData(incomingReceita.getData());
@@ -61,7 +71,7 @@ public class ReceitasService {
 
     @Transactional
     public void delete(Long id) {
-        Receitas receita = findById(id);
+        Receita receita = findById(id);
         repository.delete(receita);
     }
 }

@@ -1,13 +1,18 @@
 package com.laylamonteiro.BudgetApp.Entity;
 
+import com.laylamonteiro.BudgetApp.Enum.CategoriaDespesa;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Data
 @Entity
-public class Receitas {
+@NoArgsConstructor
+@AllArgsConstructor
+public class Despesa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,4 +26,7 @@ public class Receitas {
 
     @Column
     private LocalDate data;
+
+    @Column
+    private CategoriaDespesa categoria;
 }

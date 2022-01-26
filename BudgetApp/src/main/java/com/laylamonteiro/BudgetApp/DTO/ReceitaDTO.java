@@ -10,7 +10,7 @@ import lombok.Data;
 import java.time.LocalDate;
 
 @Data
-public class DespesasDTO {
+public class ReceitaDTO {
 
     private Long id;
     private String descricao;

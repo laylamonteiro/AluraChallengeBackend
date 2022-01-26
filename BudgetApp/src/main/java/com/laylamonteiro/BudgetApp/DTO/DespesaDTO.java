@@ -5,12 +5,13 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.laylamonteiro.BudgetApp.Enum.CategoriaDespesa;
 import lombok.Data;
 
 import java.time.LocalDate;
 
 @Data
-public class ReceitasDTO {
+public class DespesaDTO {
 
     private Long id;
     private String descricao;
@@ -20,4 +21,6 @@ public class ReceitasDTO {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate data;
+
+    private CategoriaDespesa categoria;
 }

@@ -1,10 +1,11 @@
 package com.laylamonteiro.BudgetApp.Service;
 
-import com.laylamonteiro.BudgetApp.DTO.DespesasDTO;
-import com.laylamonteiro.BudgetApp.Entity.Despesas;
-import com.laylamonteiro.BudgetApp.Repository.DespesasRepository;
+import com.laylamonteiro.BudgetApp.DTO.DespesaDTO;
+import com.laylamonteiro.BudgetApp.Entity.Despesa;
+import com.laylamonteiro.BudgetApp.Repository.DespesaRepository;
 import com.laylamonteiro.BudgetApp.Utils.EntityMapper;
 import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,23 +13,24 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Data
 @Service
 public class DespesasService {
 
     @Autowired
-    final DespesasRepository repository;
+    final DespesaRepository repository;
 
     final EntityMapper mapper = new EntityMapper();
 
 
-    public List<Despesas> findAll() {
+    public List<Despesa> findAll() {
         return repository.findAll();
     }
 
-    public Despesas findById(final Long id) {
-        Optional<Despesas> despesa = repository.findById(id);
+    public Despesa findById(final Long id) {
+        Optional<Despesa> despesa = repository.findById(id);
 
         if (despesa.isPresent()) {
             return despesa.get();
@@ -37,19 +39,27 @@ public class DespesasService {
         }
     }
 
+    public List<Despesa> findByDescricao(String descricao) {
+        List<Despesa> despesas = findAll();
+
+        return despesas.stream().filter(despesa ->
+                StringUtils.containsIgnoreCase(despesa.getDescricao(), descricao))
+                .collect(Collectors.toList());
+    }
+
     @Transactional
-    public Despesas create(DespesasDTO dto) {
-        Despesas despesa = mapper.toEntity(dto);
+    public Despesa create(DespesaDTO dto) {
+        Despesa despesa = mapper.toEntity(dto);
         return repository.save(despesa);
     }
 
     @Transactional
-    public Despesas update(Despesas incomingDespesa) {
+    public Despesa update(Despesa incomingDespesa) {
         Long incomingDespesaId = incomingDespesa.getId();
-        Optional<Despesas> existingDespesa = repository.findById(incomingDespesaId);
+        Optional<Despesa> existingDespesa = repository.findById(incomingDespesaId);
 
         if (existingDespesa.isPresent()) {
-            Despesas despesa = existingDespesa.get();
+            Despesa despesa = existingDespesa.get();
             despesa.setDescricao(incomingDespesa.getDescricao());
             despesa.setValor(incomingDespesa.getValor());
             despesa.setData(incomingDespesa.getData());
@@ -62,7 +72,7 @@ public class DespesasService {
 
     @Transactional
     public void delete(Long id) {
-        Despesas despesa = findById(id);
+        Despesa despesa = findById(id);
         repository.delete(despesa);
     }
 }

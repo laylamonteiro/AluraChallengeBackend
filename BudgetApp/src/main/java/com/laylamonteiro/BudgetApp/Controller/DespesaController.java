@@ -1,7 +1,7 @@
 package com.laylamonteiro.BudgetApp.Controller;
 
-import com.laylamonteiro.BudgetApp.DTO.DespesasDTO;
-import com.laylamonteiro.BudgetApp.Entity.Despesas;
+import com.laylamonteiro.BudgetApp.DTO.DespesaDTO;
+import com.laylamonteiro.BudgetApp.Entity.Despesa;
 import com.laylamonteiro.BudgetApp.Service.DespesasService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,32 +11,38 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-public class DespesasController {
+public class DespesaController {
 
     @Autowired
     DespesasService despesasService;
 
     @GetMapping("/despesas")
     @ResponseStatus(HttpStatus.OK)
-    public List<Despesas> getAllDespesas() {
+    public List<Despesa> getAllDespesas() {
         return despesasService.findAll();
     }
 
     @GetMapping("/despesa/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Despesas getDespesaById(@PathVariable(name = "id") Long id) {
+    public Despesa getDespesaById(@PathVariable(name = "id") Long id) {
         return despesasService.findById(id);
+    }
+
+    @GetMapping("/despesa")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Despesa> getDespesaByDescricao(@RequestParam String descricao) {
+        return despesasService.findByDescricao(descricao);
     }
 
     @PostMapping("/despesa")
     @ResponseStatus(HttpStatus.CREATED)
-    public Despesas createDespesa(@RequestBody DespesasDTO despesa) {
+    public Despesa createDespesa(@RequestBody DespesaDTO despesa) {
         return despesasService.create(despesa);
     }
 
     @PutMapping("/despesa")
     @ResponseStatus(HttpStatus.OK)
-    public Despesas updateDespesa(@Valid @RequestBody Despesas despesa) {
+    public Despesa updateDespesa(@Valid @RequestBody Despesa despesa) {
         return despesasService.update(despesa);
     }
 
