@@ -4,6 +4,8 @@ import com.laylamonteiro.BudgetApp.DTO.DespesaDTO;
 import com.laylamonteiro.BudgetApp.DTO.ReceitaDTO;
 import com.laylamonteiro.BudgetApp.Entity.Despesa;
 import com.laylamonteiro.BudgetApp.Entity.Receita;
+import com.laylamonteiro.BudgetApp.Enum.CategoriaDespesa;
+import org.apache.tomcat.util.codec.binary.StringUtils;
 
 public class EntityMapper {
 
@@ -14,6 +16,7 @@ public class EntityMapper {
         dto.setDescricao(despesa.getDescricao());
         dto.setValor(despesa.getValor());
         dto.setData(despesa.getData());
+        dto.setCategoria(despesa.getCategoria());
 
         return dto;
     }
@@ -35,6 +38,12 @@ public class EntityMapper {
         despesa.setDescricao(dto.getDescricao());
         despesa.setValor(dto.getValor());
         despesa.setData(dto.getData());
+
+        if (dto.getCategoria() == null || dto.getCategoria().toString().isBlank()){
+            despesa.setCategoria(CategoriaDespesa.OUTROS);
+        } else {
+            despesa.setCategoria(dto.getCategoria());
+        }
 
         return despesa;
     }

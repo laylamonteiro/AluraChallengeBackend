@@ -1,5 +1,6 @@
 package com.laylamonteiro.BudgetApp.Entity;
 
+import com.laylamonteiro.BudgetApp.Enum.CategoriaDespesa;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,4 +26,7 @@ public class Despesa {
 
     @Column
     private LocalDate data;
+
+    @Column
+    private CategoriaDespesa categoria;
 }
